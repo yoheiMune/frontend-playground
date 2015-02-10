@@ -104,19 +104,6 @@ function ajax(url) {
 }
 
 
-// QUnitの使い方
-// QUnit.test('sample test', function (assert) {
-//     assert.equal(1, 1, 'left actual, right expect');
-//     assert.equal(1, 1, 'left actual, right expect');
-// });
-// // asyncテスト
-// QUnit.test('async test', function (assert) {
-//     var done = assert.async();
-//     setTimeout(function () {
-//         assert.equal('1', '1', 'same value');
-//         done();
-//     }, 100);
-// });
 
 
 // Jasmineの使い方
@@ -151,7 +138,6 @@ describe('jasmine test', function () {
         }, 100);
     });
 });
-
 
 
 
