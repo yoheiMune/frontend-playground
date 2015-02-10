@@ -1,4 +1,4 @@
-console.debug('SW startup.');
+console.debug('SW2 startup.');
 importScripts('../cache-polyfill/dist/serviceworker-cache-polyfill.js');
 
 // var CACHE_NAME = 'cache-v1';

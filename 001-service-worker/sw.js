@@ -1,87 +1,57 @@
 console.debug('SW startup.');
 importScripts('../cache-polyfill/dist/serviceworker-cache-polyfill.js');
 
-// var CACHE_NAME = 'cache-v1';
 
-// var urlsToCache = [
-//     './sub.html',
-//     './main.css',
-//     './script.js'
-// ];
+// モックデータ
+var mockObject;
+
 
 self.addEventListener('install', function (event) {
     console.debug('install fired.');
+});
 
-    // インストール処理
-    // event.waitUntil(
-    //     caches.open(CACHE_NAME).then(function (cache) {
-    //         console.log('Opened cache');
-    //         return cache.addAll(urlsToCache);
-    //     })
-    // );
-
-      // event.waitUntil(
-      //   caches.open(CACHE_NAME)
-      //     .then(function(cache) {
-      //       console.log('Opened cache');
-      //       return cache.addAll(urlsToCache);
-      //     })
-      // );
+self.addEventListener('activate', function () {
+    console.debug('activate fired.');
 });
 
 
 self.addEventListener('fetch', function(event) {
-    console.log('fetch-event: ', event, event.request.url);
-  event.respondWith(
-    caches.match(event.request)
-      .then(function(response) {
-        // キャッシュがあったのでそのレスポンスを返す
-        if (response) {
-          return response;
-        }
-
-        return fetch(event.request);
-      })
-  );
-
-  // Message送信
-
+    var path = (new URL(event.request.url)).pathname;
+    console.log('fetch-event: ', event, event.request.url, path);
+    if (mockObject && mockObject[path]) {
+        var response = _createResponse(path);
+        return event.respondWith(response);
+    } else {
+        return;
+    }
 });
 
 
 
 // メッセージ受け取り
 self.onmessage = function (event) {
-    console.log('[worker]', event, event.data, event.data.text, self);
+    console.log('[worker]', event.data);
+
+    mockObject = JSON.parse(event.data);
 
     if (event.ports) {
-        event.ports[0].postMessage('Recived!');
+        event.ports[0].postMessage('Mock Recived');
     }
 };
 
 
-/*
-console.log("SW startup");
-
-this.onmessage = function(event) {
-  console.log("Got message in SW", event.data.text);
-  
-  if (event.source) {
-    event.source.postMessage("Woop!");
-  }
-  else {
-    console.log("No event.source");
-  }
-
-  if (event.data.port) {
-    event.data.port.postMessage("Woop!");
-  }
-};
-*/
-
-
-
-
+// レスポンスを生成する
+function _createResponse (url) {
+    var body = JSON.stringify(mockObject[url] || '');
+    var head = {
+        status: 200,
+        statusText: 'OK',
+        header: {
+            'Content-Type': 'application/json'
+        }
+    };
+    return new Response(body, head);
+}
 
 
 

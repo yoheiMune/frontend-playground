@@ -1,143 +1,102 @@
-function log() {
-  var $area = document.querySelector('#log');
-  $area.appendChild(document.createTextNode(Array.prototype.join.call(arguments, ", ") + '\n'));
-  console.log.apply(console, arguments);
-}
+(function () {
 
-window.onerror = function(err) {
-  log("Error", err);
-};
+    /*
+        ログ出力
+    */
+    function log () {
+      var $area = document.querySelector('#log');
+      $area.appendChild(document.createTextNode(Array.prototype.join.call(arguments, ", ") + '\n'));
+      console.log.apply(console, arguments);
+    }
 
-
-
-
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js').then(function (sw) {
-        // success
-        console.debug('serviceWorker registration successful with scope: ', sw.scope);
-    }).catch(function (err) {
-        // fail
-        console.error('serviceWorker registration failed. reason: ', err);
-    });
-}
-
-
-function ajax(url) {
-    return new Promise(function (done, fail) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', url);
-        xhr.addEventListener('load', function () {
-            if (xhr.status !== 200) {
-                return fail(xhr.response);
-            }
-            done(xhr.response);
-        });
-        xhr.addEventListener('error', fail);
-        xhr.send();
-    });
-}
-
-
-
-
-
-// Messageの受け取り
-window.onmessage = function(event) {
-  log("Got reply from serviceworker via window", event.data);
-};
-
-
-// Messageのやりとり
-// ① ホスト　から　SW
-var messageChannel = new MessageChannel();
-messageChannel.port1.onmessage = messageChannel.port2.onmessage = function(event) {
-  log("Got reply from serviceworker via channel", event.data);
-};
-
-// serviceWorkerがactivateされるまでcontrollerがnullになるので、
-// とりあえずsetTimeoutでごまかす
-setTimeout(function () {
-    navigator.serviceWorker.controller.postMessage('Hello', [messageChannel.port1]);
-    console.log('send message!!');
-}, 1000);
-
-
-
-/*
-
-    navigator.serviceWorker.register('sw.js', {
-      scope: './'
-    }).then(function(sw) {
-
-      log("Registered!", sw);
-    }).catch(function(err) {
+    window.onerror = function(err) {
       log("Error", err);
-    });
-
-    navigator.serviceWorker.ready.then(function(reg) {
-      reg.active.postMessage({
-        text: "Hi!",
-        port: messageChannel && messageChannel.port2
-      }, [messageChannel && messageChannel.port2]);
-    });
-*/
+    };
 
 
-
-
-/*
-    テスト対象の機能
-*/
-function ajax(url) {
-    return new Promise(function (done, fail) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', url);
-        xhr.addEventListener('load', function () {
-            if (xhr.status !== 200) {
-                return fail(xhr.response);
-            }
-            done(xhr.response);
+    /*
+        テスト対象機能
+    */
+    function getFullName (id) {
+        return new Promise(function (done, fail) {
+            $.getJSON('./api/users/' + id).then(function (user) {
+                var fullName;
+                if (user.firstName && user.lastName) {
+                    fullName = user.firstName + ' ' + user.lastName;
+                } else if (user.firstName) {
+                    fullName = user.firstName;
+                } else if (user.lastName) {
+                    fullName = user.lastName;
+                }
+                done(fullName);
+            }).fail(fail);
         });
-        xhr.addEventListener('error', fail);
-        xhr.send();
+    }
+
+
+    /*
+        テスト開始
+    */
+    var messageChannel;
+    var testData = {
+        '/001-service-worker/api/users/1': {firstName: 'Yohei',   lastName: 'Munesada'},
+        '/001-service-worker/api/users/2': {firstName: 'Tomoko',  lastName: undefined},
+        '/001-service-worker/api/users/3': {firstName: undefined, lastName: 'Yamada'}
+    };
+    describe('test - getFullName', function () {
+
+        beforeEach(function (done) {
+            navigator.serviceWorker.register('./sw.js').then(function (aRegistration) {
+                registration = aRegistration;
+                // Activationしていない場合は、強制リロード
+                if (navigator.serviceWorker.controller === null) {
+                    return location.reload();
+                }
+                var messageChannel = new MessageChannel();
+                messageChannel.port1.onmessage = messageChannel.port2.onmessage = function(event) {
+                  log("[worker]", event.data);
+                  done();
+                };
+                var testDataString = JSON.stringify(testData);
+                navigator.serviceWorker.controller.postMessage(testDataString, [messageChannel.port1]);
+                log("[host]", testDataString);
+
+            }).catch(function (err) {
+                console.error('error', err);
+                done(false);
+            });
+        });
+
+        afterEach(function (done) {
+            navigator.serviceWorker.getRegistration().then(function (registration) {
+                registration.unregister().then(function () {
+                    done();
+                });
+            });
+        });
+
+        it('both firstName and lastName', function (done) {
+            getFullName(1).then(function (fullName) {
+                expect('Yohei Munesada').toBe(fullName);
+                done();
+            })
+        });
+
+        it('only firstName', function (done) {
+            getFullName(2).then(function (fullName) {
+                expect('Tomoko').toBe(fullName);
+                done();
+            })
+        });
+
+        it('only lastName', function (done) {
+            getFullName(3).then(function (fullName) {
+                expect('Yamada').toBe(fullName);
+                done();
+            })
+        });
+
     });
-}
-
-
-
-
-// Jasmineの使い方
-describe('jasmine test', function () {
-
-    // 前処理
-    beforeEach(function (done) {
-        setTimeout(function () {
-            log('beforeEach finished.');
-            done();
-        }, 100);
-    });
-
-    // 後処理
-    afterEach(function (done) {
-        setTimeout(function () {
-            log('afterEach finished.');
-            done();
-        }, 100);
-    });
-
-    // 普通のテスト
-    it('test-001', function () {
-        expect(12).toBe(12);
-    });
-
-    // asyncテスト
-    it('test-async-001', function (done) {
-        setTimeout(function () {
-            expect(true).toBe(true);
-            done();
-        }, 100);
-    });
-});
 
 
 
@@ -161,3 +120,19 @@ describe('jasmine test', function () {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+})();
