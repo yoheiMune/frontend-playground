@@ -1,0 +1,5 @@
+# npm初期化
+$ npm init
+
+# browserifyインストール
+$ sudo npm install -g browserify
