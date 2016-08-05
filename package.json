@@ -1,0 +1,25 @@
+{
+  "name": "frontend-playground",
+  "version": "1.0.0",
+  "description": "front-end playground for testing, tasting, or something.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yoheiMune/frontend-playground.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yoheiMune/frontend-playground/issues"
+  },
+  "homepage": "https://github.com/yoheiMune/frontend-playground#readme",
+  "devDependencies": {
+    "babel-cli": "^6.10.1"
+  },
+  "dependencies": {
+    "babel-preset-es2015": "^6.9.0"
+  }
+}

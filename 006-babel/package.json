@@ -1,0 +1,16 @@
+{
+  "name": "006-babel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "my-file.js",
+  "scripts": {
+    "build": "babel -d dest src",
+    "hello": "echo \"hello $1\""
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.11.4",
+    "babel-preset-es2015": "^6.9.0"
+  }
+}
