@@ -5,7 +5,6 @@
   "main": "my-file.js",
   "scripts": {
     "babel-build": "babel -d dest src",
-    "babelify-build": "babelify",
     "hello": "echo \"hello $1\""
   },
   "author": "",
