@@ -4,6 +4,7 @@
   "description": "",
   "main": "my-file.js",
   "scripts": {
+    "babel-version": "babel --version",
     "babel-build": "babel -d dest src",
     "hello": "echo \"hello $1\""
   },
