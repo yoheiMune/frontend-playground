@@ -1,13 +1,11 @@
 {
   "name": "005-react",
-  "version": "0.0.0",
   "homepage": "https://github.com/yoheiMune/frontend-playground",
   "authors": [
     "Yohei Munesada <y.munesada@gmail.com>"
   ],
-  "moduleType": [
-    "es6"
-  ],
+  "description": "",
+  "main": "",
   "license": "MIT",
   "ignore": [
     "**/.*",
@@ -15,5 +13,8 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "react": "^15.3.0"
+  }
 }
