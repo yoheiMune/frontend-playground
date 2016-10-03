@@ -1,4 +1,5 @@
 var webpack = require('webpack');
+var BellOnBundlerErrorPlugin = require('bell-on-bundler-error-plugin');
 
 let config = {
     entry: "./entry.js",
@@ -23,9 +24,10 @@ let config = {
         ]
     },
     plugins: [
+        new BellOnBundlerErrorPlugin(),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
-                warning: false
+                warnings: false
             }
         })
     ]
