@@ -160,6 +160,9 @@ console.log(a, b);
 // const {sayHi, sayGoodby} = require('./mymodule.js');
 // sayHi();
 // sayGoodby();
+import {foo, bar} from "./mymoduleES6.js"
+print(foo());
+print(bar());
 var people = [
     {
         id: 1,
