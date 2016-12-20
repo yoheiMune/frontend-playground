@@ -1,39 +1,37 @@
-var webpack = require('webpack');
-var BellOnBundlerErrorPlugin = require('bell-on-bundler-error-plugin');
-
-let config = {
-    entry: "./entry.js",
-    output: {
-        path: __dirname,
-        filename: "bundle.js"
+// webpack.config.js
+module.exports = {
+    entry : './react-app.js',
+    output : {
+        filename : 'react-app.bundle.js'
     },
-    module: {
-        loaders: [
-            {
-                test: /\.css$/, 
-                loader: "style!css"
-            },
+    module : {
+        loaders : [
             {
                 test: /\.js$/,
-                loader: "babel-loader",
+                loader: 'babel-loader',
                 exclude: /node_modules/,
                 query: {
-                    presets: ["es2015"]
+                  presets: ['react', 'es2015']
                 }
             }
-        ]
+        ]        
     },
-    plugins: [
-        new BellOnBundlerErrorPlugin(),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
-        })
-    ]
-}; 
+    cache : true
+};
 
-
-
-
-module.exports = config;
+// webpack.config.js
+// let webpack = require('webpack');
+// module.exports = {
+//     entry : './main.js',
+//     output : {
+//         filename : 'main.bundle.js'
+//     },
+//     plugins : [
+//         new webpack.optimize.UglifyJsPlugin({
+//             compress: {
+//                 warnings: false
+//             }
+//         })
+//     ],
+//     devtool : 'source-map'
+// };
