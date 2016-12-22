@@ -4,6 +4,8 @@
 
 // 参照：https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/Spread_operator
 
+// https://msdn.microsoft.com/en-us/library/dn919259(v=vs.94).aspx
+
 
 // 関数呼び出しに対して
 function func1(a, b, c) {
@@ -39,13 +41,25 @@ let d5 = [2, 3];
 let d6 = [1, ...d5, 4, 5];
 console.log('d6:', d6);
 
+let d7 = [1, 2, 3];
+let d8 = d7.slice();
+d8[1] = 10;
+console.log('d7:', d7);
+
+let d9 = [1, 2, 3];
+let d10 = [...d9];
+d10[1] = 10;
+console.log('d9:', d9);
+
 
 // babel --presets stage-1 -o spread_operator.bundle.js spread_operator.js
 // node spread_operator.bundle.js 
 // https://babeljs.io/docs/plugins/preset-stage-1/
 // https://github.com/sebmarkbage/ecmascript-rest-spread
 
-/**/
+// Object Rest/Spread Properties for ECMAScript
+
+/*
 // Object
 let person = {
     firstName : 'Yohei',
@@ -68,7 +82,7 @@ let person2 = {
     ...others
 };
 console.log('person2:', person2);
-
+*/
 
 
 /**
