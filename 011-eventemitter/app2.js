@@ -1,24 +1,54 @@
 /**
- * The very simple sample for events.EventEmitter (Node.JS).
+ * The sample of eventEmitter (Node.js)
  *
  * How to run:
- *  $ node app2.js 
+ *  $ node app.js
  */
+
 const EventEmitter = require('events').EventEmitter;
+const fs = require('fs');
+const path = require('path');
 
-const ev = new EventEmitter();
+class DirectoryReader extends EventEmitter {
 
-// イベントを受け取る
-ev.on('data', data => {
-    console.log('dataを受け取ったよ：', data);
-})
+    constructor(targetDirectory) {
+        super();
+        this.dir = targetDirectory;
+    }
 
-// イベントを受け取る（1回限り）
-ev.once('data', data => {
-    console.log('dataを受け取ったよ(1回限り)：', data);
+    read() {
+        fs.readdir(this.dir, (err, files) => {
+
+            if (err) {
+                return this.emit('error', err);
+            }
+
+            files.forEach(file => {
+                let content = fs.readFileSync(path.join(this.dir, file), 'utf-8');
+                this.emit('data', file, content);
+            });
+
+            this.emit('end');
+        });
+    }
+}
+
+let dirReader = new DirectoryReader('./sampledir');
+
+dirReader.on('error', err => {
+    console.log('エラーだよ。 ', err);
 });
 
-// イベントを発行する
-ev.emit('data', 1);
-ev.emit('data', 2);
-ev.emit('data', 3);
+dirReader.on('data', (fileName, content) => {
+    console.log(`データを受け取ったよ。fileName=${fileName}, content=${content}`);
+});
+
+dirReader.once('data', (fileName, content) => {
+    console.log(`1回だけデータを受け取ったよ。fileName=${fileName}, content=${content}`);
+});
+
+dirReader.on('end', () => {
+    console.log('終わったよ。');
+});
+
+dirReader.read();
