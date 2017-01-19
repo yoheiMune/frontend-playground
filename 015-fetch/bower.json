@@ -1,0 +1,17 @@
+{
+  "name": "015-fetch",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Yohei Munesada <y.munesada@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/yoheiMune/frontend-playground",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
