@@ -3,27 +3,11 @@
     https://github.com/github/fetch
     https://github.github.io/fetch
 
-    npm install --save whatwg-fetch
+    $ npm init
+    $ npm install --save express
 
-    npm install --save-dev babel-cli
-    npm install --save-dev babel-preset-es2015
-    npm install --save-dev babelify
-    npm install --save-dev browserify
-
-$ mkdir dist
-$ ./node_modules/.bin/browserify --presets es2015 --transform babelify --outfile dist/fetch-sample.bundle.js fetch-sample.js
-
-$ bower init
-
-$ bower install fetch
-bower fetch#*               not-cached https://github.com/github/fetch.git#*
-bower fetch#*                  resolve https://github.com/github/fetch.git#*
-bower fetch#*                 download https://github.com/github/fetch/archive/v2.0.1.tar.gz
-bower fetch#*                  extract archive.tar.gz
-bower fetch#*                 resolved https://github.com/github/fetch.git#2.0.1
-bower fetch#^2.0.1             install fetch#2.0.1
-
-fetch#2.0.1 bower_components/fetch
+    $ bower init
+    $ bower install --save fetch
 */
 
 // textやhtmlなどの文字列で値を受け取る場合
@@ -114,22 +98,4 @@ fetch('/text', {
     headers : new Headers({ 'X-MY-APP' : '12345' })
 }).then(response => response.text())
     .then(text => console.log('text:', text));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

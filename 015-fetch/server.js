@@ -2,16 +2,25 @@ const fs = require('fs');
 var bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-
+// for static files.
 app.use('/bower_components', express.static('bower_components'));
 app.use('/fetch-sample.js', (req, res) => {
     res.send(fs.readFileSync('./fetch-sample.js', 'utf-8'));
 });
+
+// Index page.
 app.get('/', (req, res) => {
-    res.send(fs.readFileSync('./index.html', 'utf-8'));
+    res.send(`
+        <html>
+            <body>
+                <script type="text/javascript" src="./bower_components/fetch/fetch.js"></script>
+                <script type="text/javascript" src="./fetch-sample.js"></script>
+            </body>
+        </html>
+    `);
 });
 
 app.get('/text', (req, res) => {
@@ -40,11 +49,10 @@ app.get('/get_with_params', (req, res) => {
 
 app.post('/post_with_params', (req, res) => {
     res.setHeader('Content-Type', 'text/plain');
-    // console.log('req.headers', req.headers['content-type']);
     res.send(`params.id=${req.body.id}, params.name=${req.body.name}`);
 });
 
-
+// Launch a server listening on 3000 port.
 const server = app.listen(3000, () => {
     console.log('Express server starts. listening on port ' + 3000);
 });
