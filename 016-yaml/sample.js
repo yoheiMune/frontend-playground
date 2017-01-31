@@ -17,7 +17,7 @@ let yaml = require('js-yaml');
 
 // Hash.
 let data1 = yaml.load(`
-    greeting: hello,
+    greeting: hello
     name: world
 `);
 console.log(data1);
@@ -33,7 +33,7 @@ console.log(data2);
 // Hash nested.
 let data3 = yaml.load(`
     user:
-        name: Yohei,
+        name: Yohei
         age: 30
 `);
 console.log(data3);
@@ -50,7 +50,7 @@ console.log(data);
 // Hash & Array nested.
 data = yaml.load(`
     user:
-        name: 'Yohei'
+        name: Yohei
         favorites:
             - Ramen
             - Tennis
