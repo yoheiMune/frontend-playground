@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<!--
+    This is a directory upload sample.
+    This feature is only supported by Chrome.
+
+    Ref:
+        http://qiita.com/akase244/items/f5f7287cfe28bebe00fc
+        http://jsfiddle.net/Sapphion/HcD9c/
+-->
+
+<input id="file" type="file" name="upfile[]" webkitdirectory>
+
+<script>
+
+    document.getElementById('file').addEventListener('change', ev => {
+
+        for (let i = 0; i < ev.target.files.length; i++) {
+
+            let file = ev.target.files[i];
+            let relativePath = file.webkitRelativePath;
+
+            let fileReader = new FileReader();
+            fileReader.onload = event => {
+                let text = event.target.result;
+                console.log(relativePath, text);
+            }
+            fileReader.readAsText(file);
+        }
+
+    });
+
+    /**
+
+        - target dir.
+
+            data/
+                a.txt
+                b.txt
+                sub/
+                    c.txt
+
+        - Console output.
+
+        data/a.txt aaa
+        data/b.txt bbb
+        data/sub/c.txt ccc
+     */
+
+</script>
+
+</body>
+</html>
