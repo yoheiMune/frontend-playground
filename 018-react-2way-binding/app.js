@@ -11,16 +11,22 @@ class MyApp extends React.Component {
 		super(props);
 
 		this.state = {
-			message : 'Hello!'
+			text : 'Hello!',
+			checkbox : ''
 		};
 	}
 
 	render() {
 		return (
 			<div>
-				<input valueLink={this.linkState('message')} /><br/>
-				<br/>
-				<p>{this.state.message}</p>
+				<input type="text" valueLink={this.linkState('text')} /><br/>
+				<p>{this.state.text}</p>
+				<select type="checkbox" valueLink={this.linkState('checkbox')}>
+					<option value="ラーメン">ラーメン</option>
+					<option value="テニス">テニス</option>
+					<option value="プログラミング">プログラミング</option>
+				</select><br/>
+				<p>{this.state.checkbox}</p>
 			</div>
 		);
 	}
