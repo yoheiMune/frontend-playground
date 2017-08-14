@@ -17,6 +17,11 @@ config.headers = {
 //     port: 8888
 // };
 
+// axios.get(url, config).then(response => {
+//     console.log('response:', response);
+// });
+
+url = "https://api.dokusho-ojikan.jp/dokusho-server/recommend/user_to_book?id=2076529808&limit=20&shuffle_flg=0";
 axios.get(url, config).then(response => {
     console.log('response:', response);
 });

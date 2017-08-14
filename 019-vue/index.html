@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+    <div id="app">{{ message }}</div>
+
+    <div id="app2">
+        <span v-bind:title="message">
+            Hover your mouse over me for a few seconds to see my dynamically bound title!
+        </span>
+    </div>
+
+    <div id="app3">
+        <p v-if="seen">Now you see me</p>
+    </div>
+
+    <div id="app4">
+        <ol>
+            <li v-for="todo in todos">
+                {{ todo.text }}
+            </li>
+        </ol>
+    </div>
+
+    <div id="app5">
+        <p>{{ message }}</p>
+        <button v-on:click="reverseMessage">Reverse Message</button>
+    </div>
+
+    <div id="app6">
+        <p>{{ message }}</p>
+        <input type="text" v-model="message">
+    </div>
+
+    <div id="app7">
+        <ol>
+            <my-item v-for="skill in skills" v-bind:item="skill"/>
+        </ol>
+    </div>
+
+    <!-- =========== 以上、「はじめに」でした ============ -->
+
+    <script src="https://unpkg.com/vue"></script>
+    <script src="./app.js"></script>
+</body>
+</html>
