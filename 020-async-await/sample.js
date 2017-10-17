@@ -4,6 +4,10 @@
 
     References:
         - https://qiita.com/mizchi/items/95410f4955d94ed103fa
+        - https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/async_function
+        - https://ponyfoo.com/articles/understanding-javascript-async-await
+        - https://gist.github.com/LightSpeedC/2c983029a0bf873d600b
+        - https://qiita.com/gaogao_9/items/40babdf63c73a491acbb
 */
 
 console.log('start')
