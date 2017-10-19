@@ -48,6 +48,12 @@ async function main () {
     val12 = val12.reduce((sum, val) => sum + val, 0)
     console.log(`val9+val10+val11=${val12} , ${Date.now() - t3}ms`) // 500ms
 
+    // Parallel3.
+    const t4 = Date.now()
+    const [val13, val14, val15] = [ await sleep(500, 1), await sleep(500, 2), await sleep(500, 3) ]
+    const val16 = val13 + val14 + val15
+    console.log(`val13+val14+val15=${val16} , ${Date.now() - t4}ms`) // 1500ms
+
     return 'main: end'
 }
 // start
