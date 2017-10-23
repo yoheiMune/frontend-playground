@@ -29,7 +29,8 @@ async function main () {
     const val2 = await sleep(500, 1)
     const val3 = await sleep(500, 2)
     const val4 = await sleep(500, 3)
-    console.log(`val2+val3+val4=${val2 + val3 + val4} , ${Date.now() - t1}ms`) // 1,500ms
+    console.log(`val2+val3+val4=${val2 + val3 + val4}`) // val2+val3+val4=6
+    console.log(`${Date.now() - t1}ms`) // 1,500ms
 
     // Parallel.
     const t2 = Date.now()
@@ -37,7 +38,8 @@ async function main () {
     const val6 = sleep(500, 2)
     const val7 = sleep(500, 3)
     const val8 = await val5 + await val6 + await val7
-    console.log(`val5+val6+val7=${val8} , ${Date.now() - t2}ms`) // 500ms
+    console.log(`val5+val6+val7=${val8}`) // val5+val6+val7=6
+    console.log(`${Date.now() - t2}ms`) // 500ms
 
     // Parallel2.
     const t3 = Date.now()
@@ -45,8 +47,10 @@ async function main () {
     const val10 = sleep(500, 2)
     const val11 = sleep(500, 3)
     let val12 = await Promise.all([val9, val10, val11])
+    console.log('val12:', val12) // val12: [ 1, 2, 3 ]
     val12 = val12.reduce((sum, val) => sum + val, 0)
-    console.log(`val9+val10+val11=${val12} , ${Date.now() - t3}ms`) // 500ms
+    console.log(`val9+val10+val11=${val12}`) // val9+val10+val11=6
+    console.log(`${Date.now() - t3}ms`) // 500ms
 
     // Parallel3.
     const t4 = Date.now()
