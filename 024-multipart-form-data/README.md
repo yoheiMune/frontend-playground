@@ -1,5 +1,14 @@
 # Sample for Multipart/Form-data
 
+## How to test.
+You can check below experiments like this.
+```
+$ node server.js
+```
+Then, access here.
+```
+http://localhost:8080
+```
 
 ## Experiment vol.1
 text and textfile.
@@ -37,7 +46,8 @@ aaa
 ## Experiment vol.2
 text and image file.
 ### Front-end
-Same as Experiment vol.1.
+Same as Experiment vol.1.  
+`input[type="file"]` is selected [sample.jpg](./sample.jpg).
 ### Back-end
 #### Request Header（content-type）
 ```
